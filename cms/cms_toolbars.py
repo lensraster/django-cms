@@ -144,7 +144,7 @@ class BasicToolbar(CMSToolbar):
         if not self._admin_menu:
             self._admin_menu = self.toolbar.get_or_create_menu(ADMIN_MENU_IDENTIFIER, self.current_site.name)
             # Users button
-            self.add_users_button(self._admin_menu)
+            #self.add_users_button(self._admin_menu)
 
             # sites menu
             sites_queryset = get_user_sites_queryset(self.request.user)
@@ -158,12 +158,12 @@ class BasicToolbar(CMSToolbar):
                                              active=site.pk == self.current_site.pk)
 
             # admin
-            self._admin_menu.add_sideframe_item(_('Administration'), url=admin_reverse('index'))
-            self._admin_menu.add_break(ADMINISTRATION_BREAK)
+            #self._admin_menu.add_sideframe_item(_('Administration'), url=admin_reverse('index'))
+            #self._admin_menu.add_break(ADMINISTRATION_BREAK)
 
             # cms users settings
-            self._admin_menu.add_sideframe_item(_('User settings'), url=admin_reverse('cms_usersettings_change'))
-            self._admin_menu.add_break(USER_SETTINGS_BREAK)
+            #self._admin_menu.add_sideframe_item(_('User settings'), url=admin_reverse('cms_usersettings_change'))
+            #self._admin_menu.add_break(USER_SETTINGS_BREAK)
 
             # clipboard
             if self.toolbar.edit_mode or self.toolbar.build_mode:
@@ -179,8 +179,8 @@ class BasicToolbar(CMSToolbar):
                 self._admin_menu.add_break(CLIPBOARD_BREAK)
 
             # Disable toolbar
-            self._admin_menu.add_link_item(_('Disable toolbar'), url='?%s' % get_cms_setting('CMS_TOOLBAR_URL__DISABLE'))
-            self._admin_menu.add_break(TOOLBAR_DISABLE_BREAK)
+            #self._admin_menu.add_link_item(_('Disable toolbar'), url='?%s' % get_cms_setting('CMS_TOOLBAR_URL__DISABLE'))
+            #self._admin_menu.add_break(TOOLBAR_DISABLE_BREAK)
 
             # logout
             self.add_logout_button(self._admin_menu)
@@ -541,6 +541,7 @@ class PageToolbar(CMSToolbar):
             current_page_menu.add_modal_item(_('Page settings'), url=page_settings_url, disabled=not edit_mode,
                                              on_close=refresh)
 
+            """
             # advanced settings
             advanced_url = admin_reverse('cms_page_advanced', args=(self.page.pk,))
             advanced_url = add_url_parameters(advanced_url, language=self.toolbar.language)
@@ -589,6 +590,7 @@ class PageToolbar(CMSToolbar):
             nav_title = _('Hide in navigation') if self.page.in_navigation else _('Display in navigation')
             nav_action = admin_reverse('cms_page_change_innavigation', args=(self.page.pk,))
             current_page_menu.add_ajax_item(nav_title, action=nav_action, disabled=not edit_mode, on_success=refresh)
+            """
 
             # publisher
             if self.title:
