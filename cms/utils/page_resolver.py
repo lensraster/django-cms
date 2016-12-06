@@ -68,12 +68,12 @@ def get_page_queryset_from_path(path, preview=False, draft=False, site=None):
     return pages.filter(title_set__path=path).distinct()
 
 
-def get_page_from_path(path, preview=False, draft=False):
+def get_page_from_path(path, preview=False, draft=False, site=None):
     """ Resolves a url path to a single page object.
     Returns None if page does not exist
     """
     try:
-        return get_page_queryset_from_path(path, preview, draft).get()
+        return get_page_queryset_from_path(path, preview, draft, site=site).get()
     except Page.DoesNotExist:
         return None
 
@@ -117,7 +117,8 @@ def get_page_from_request(request, use_path=None):
         if path.endswith("/"):
             path = path[:-1]
 
-    page = get_page_from_path(path, preview, draft)
+    site = request.user.websites.first().site
+    page = get_page_from_path(path, preview, draft, site=site)
 
     if draft and page and not user_can_change_page(request.user, page):
         page = get_page_from_path(path, preview, draft=False)
