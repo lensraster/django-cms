@@ -3,7 +3,7 @@
 from django.conf import settings
 from django.contrib.auth.views import redirect_to_login
 from django.core.urlresolvers import resolve, Resolver404, reverse
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.utils.cache import patch_cache_control
 from django.utils.http import urlquote
 from django.utils.timezone import now
@@ -25,6 +25,9 @@ def details(request, slug):
     The main view of the Django-CMS! Takes a request and a slug, renders the
     page.
     """
+    if not request.user.is_authenticated() or not request.user.websites.count():
+        raise Http404
+
     response_timestamp = now()
     if get_cms_setting("PAGE_CACHE") and (
         not hasattr(request, 'toolbar') or (

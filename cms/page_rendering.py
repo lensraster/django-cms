@@ -56,7 +56,7 @@ def _handle_no_page(request, slug):
     context['cms_version'] = __version__
     context['cms_edit_on'] = get_cms_setting('CMS_TOOLBAR_URL__EDIT_ON')
 
-    if not slug and settings.DEBUG:
+    if not slug:
         return TemplateResponse(request, "cms/welcome.html", context)
     try:
         #add a $ to the end of the url (does not match on the cms anymore)
