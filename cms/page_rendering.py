@@ -56,9 +56,6 @@ def _handle_no_page(request, slug):
     context['cms_version'] = __version__
     context['cms_edit_on'] = get_cms_setting('CMS_TOOLBAR_URL__EDIT_ON')
 
-    # TODO: This is temp
-    raise Http404('CMS Page not found: %s' % request.path)
-
     if not slug and settings.DEBUG:
         return TemplateResponse(request, "cms/welcome.html", context)
     try:
