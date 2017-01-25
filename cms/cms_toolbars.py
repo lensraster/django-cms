@@ -547,6 +547,7 @@ class PageToolbar(CMSToolbar):
             advanced_url = add_url_parameters(advanced_url, language=self.toolbar.language)
             advanced_disabled = not edit_mode or not self.page.has_advanced_settings_permission(self.request.user)
             current_page_menu.add_modal_item(_('Advanced settings'), url=advanced_url, disabled=advanced_disabled)
+            """
 
             # templates menu
             if self.toolbar.build_mode or edit_mode:
@@ -559,6 +560,7 @@ class PageToolbar(CMSToolbar):
                     templates_menu.add_ajax_item(name, action=action, data={'template': path}, active=active,
                                                  on_success=refresh)
 
+            """
             # page type
             page_type_url = admin_reverse('cms_page_add_page_type')
             page_type_url = add_url_parameters(page_type_url, copy_target=self.page.pk, language=self.toolbar.language)
