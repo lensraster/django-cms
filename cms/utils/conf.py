@@ -116,6 +116,14 @@ def get_toolbar_url__disable():
 
 def get_templates():
     from cms.utils.django_load import load_from_file
+    from websites.util import _thread_locals
+
+    website = getattr(_thread_locals, 'website', None)
+    if website:
+        templates = website.templates.all().order_by('-is_default')
+        if len(templates):
+            return [(t.name, t.name) for t in templates]
+
     if getattr(settings, 'CMS_TEMPLATES_DIR', False):
         tpldir = getattr(settings, 'CMS_TEMPLATES_DIR', False)
         # CMS_TEMPLATES_DIR can either be a string poiting to the templates directory

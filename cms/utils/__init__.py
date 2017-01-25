@@ -18,12 +18,6 @@ def get_template_from_request(request, obj=None, no_current_page=False):
     """
     template = None
 
-    try:
-        _tmpl = request.website.template.name
-        if _tmpl:
-            return _tmpl
-    except AttributeError, e: pass
-
     if len(get_cms_setting('TEMPLATES')) == 1:
         return get_cms_setting('TEMPLATES')[0][0]
     if hasattr(request, 'POST') and "template" in request.POST:
