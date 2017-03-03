@@ -541,13 +541,12 @@ class PageToolbar(CMSToolbar):
             current_page_menu.add_modal_item(_('Page settings'), url=page_settings_url, disabled=not edit_mode,
                                              on_close=refresh)
 
-            """
             # advanced settings
-            advanced_url = admin_reverse('cms_page_advanced', args=(self.page.pk,))
-            advanced_url = add_url_parameters(advanced_url, language=self.toolbar.language)
-            advanced_disabled = not edit_mode or not self.page.has_advanced_settings_permission(self.request.user)
-            current_page_menu.add_modal_item(_('Advanced settings'), url=advanced_url, disabled=advanced_disabled)
-            """
+            if self.page.has_advanced_settings_permission(self.request.user):
+                advanced_url = admin_reverse('cms_page_advanced', args=(self.page.pk,))
+                advanced_url = add_url_parameters(advanced_url, language=self.toolbar.language)
+                advanced_disabled = not edit_mode or not self.page.has_advanced_settings_permission(self.request.user)
+                current_page_menu.add_modal_item(_('Advanced settings'), url=advanced_url, disabled=advanced_disabled)
 
             # templates menu
             if self.toolbar.build_mode or edit_mode:
